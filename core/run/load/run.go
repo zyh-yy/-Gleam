@@ -1,15 +1,5 @@
 package registry
 
-import (
-	"runflex/core"
-)
-
-type Loader struct {
-	core.Node
-	Input  []interface{}
-	Output []interface{}
-}
-
 func (s *Loader) Do() {
 	s.Input = make([]interface{}, s.InputLen)
 	s.Output = make([]interface{}, s.OutputLen)
@@ -19,6 +9,10 @@ func (s *Loader) Do() {
 	}
 
 	// 处理逻辑
+	err := s.fun()
+	if err != nil {
+		return
+	}
 
 	for i := 0; i < len(s.Input); i++ {
 		s.Node.Output[i] <- s.Output[i]
